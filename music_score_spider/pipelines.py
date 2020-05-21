@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pymongo
-from music_score_spider.settings import mongo_host,mongo_port,mongo_db_name,mongo_db_collection
+from music_score_spider.settings import mongo_host, mongo_port, mongo_db_name, mongo_db_collection
+
 
 # Define your item pipelines here
 #
@@ -19,6 +20,6 @@ class MusicScoreSpiderPipeline(object):
         self.post = db[table_name]
 
     def process_item(self, item, spider):
-        data  = dict(item)
+        data = dict(item)
         self.post.insert(data)
         return item

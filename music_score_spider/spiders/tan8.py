@@ -5,8 +5,8 @@ from scrapy import Selector, Request
 from music_score_spider.items import ScoreItem
 
 
-class Tan8spiderSpider(scrapy.Spider):
-    name = 'Tan8Spider'
+class Tan8Spider(scrapy.Spider):
+    name = 'tan8'
     allowed_domains = ['tan8.com']
     start_urls = ['http://www.tan8.com/piano-119-0-collects-1-0.html']
     page = 0
@@ -35,14 +35,17 @@ class Tan8spiderSpider(scrapy.Spider):
         score_item['desc'] = selector.xpath("//p[@class='brief_0421 content_color']/text()").extract_first()
         # score_item['content'] = selector.xpath("").extract_first()
         score_item['play_url'] = 'http://www.77music.com/flash/%s.swf' % score_item['sourceId']
-        score_item['views'] = int(selector.xpath("//div[@class='yuepu_name_0421']//span[2]/text()").extract_first()[:-1])
-        score_item['collects'] = int(selector.xpath("//div[@class='yuepu_name_0421']//span[3]/text()").extract_first()[:-1])
+        score_item['views'] = int(
+            selector.xpath("//div[@class='yuepu_name_0421']//span[2]/text()").extract_first()[:-1])
+        score_item['collects'] = int(
+            selector.xpath("//div[@class='yuepu_name_0421']//span[3]/text()").extract_first()[:-1])
         score_item['type'] = 1
-        score_item['level'] = int(selector.xpath("//div[@class='yuepu_name_0421']//span[4]/text()").extract_first()[3:-1])
-        score_item['uploader'] = selector.xpath("//div[@class='author_img']//h3[@class='title_color']/text()").extract_first()
+        score_item['level'] = int(
+            selector.xpath("//div[@class='yuepu_name_0421']//span[4]/text()").extract_first()[3:-1])
+        score_item['uploader'] = selector.xpath(
+            "//div[@class='author_img']//h3[@class='title_color']/text()").extract_first()
         score_item['uploadDatetime'] = selector.xpath("//div[@class='author_img']//p[2]/text()").extract_first()
         score_item['updateDatetime'] = selector.xpath("//div[@class='author_img']//p[2]/text()").extract_first()
         # score_item['sounds'] = selector.xpath("").extract_first()
         # score_item['videos'] = selector.xpath("").extract_first()
         yield score_item
-
